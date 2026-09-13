@@ -458,7 +458,7 @@
   /* "7 real life opened report": Open Report slides a report panel in from the right */
   .ra-open { cursor: pointer; }
   .instr-view { transition: right 0.3s ease; }
-  body.rlreport .instr-view { right: min(695px, 55vw); }
+  body.rlreport .instr-view { right: calc((100vw - 48px) / 2); } /* half/half split right of the rail */
   .rl-chat-header {
     position: fixed;
     top: 0; left: 48px; right: 0;
@@ -481,11 +481,12 @@
   }
   body.rlreport .instr-view { top: 48px; }
   /* the compressed chat fills its column with tight margins, per the mock */
-  body.rlreport .instr-col { max-width: calc(100% - 52px); }
+  body.rlreport .instr-col { max-width: calc(100% - 36px); } /* 18px margins; cards land at 41 (18 + results offset 23) */
+  body.rlreport .rl-actions { margin-left: -5px; } /* frame 7 aligns actions at 18, not the cards' 41 */
   .report-slide {
     position: fixed;
     top: 48px; right: 0; bottom: 0;
-    width: min(695px, 55vw);
+    width: calc((100vw - 48px) / 2);
     background: #FFFFFF;
     border-left: 1px solid #E6E6E6;
     transform: translateX(105%);

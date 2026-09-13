@@ -35,7 +35,7 @@
   .hd-back:hover .hd-title { color: #000; }
 
   /* ---- 3-pane layout ---- */
-  .layout { position: fixed; left: 48px; right: 0; top: 48px; bottom: 0; display: flex; }
+  .layout { position: fixed; inset: 0; display: flex; flex-direction: column; } /* no rail/header inside the panel */
   .convo { width: 440px; flex-shrink: 0; position: relative; background: #FFFFFF; border-right: 0.5px solid #D4D4D4; }
 
   /* small composer pinned at bottom of convo */
@@ -52,11 +52,10 @@
 
   /* ---- report document ---- */
   .doc { flex: 1; min-width: 0; overflow-y: auto; background: #FFFFFF; }
-  .layout { display: flex; flex-direction: column; height: 100%; }
   .panel-top {
     flex-shrink: 0;
     display: flex; align-items: center; justify-content: flex-end; gap: 10px;
-    padding: 20px 38px 8px 20px;
+    padding: 18px 28px 0 20px;
     background: #FFFFFF;
   }
   .panel-create {
@@ -80,7 +79,7 @@
     transition: background-color 0.12s ease;
   }
   .panel-ic:hover { background: #F4F5F7; }
-  .doc-inner { max-width: 644px; margin: 0 0 0 8px; padding: 40px 40px 96px; } /* left-anchored in the panel, per the mock (content inset ~47) */
+  .doc-inner { max-width: 644px; margin: 0 0 0 10px; padding: 15px 40px 96px; } /* frame 7: content left inset 50, meta 15 below the controls row */
   .meta { font-size: 13px; line-height: 18px; font-weight: 500; color: #232323; }
   h1 { font-size: 28px; line-height: 36px; letter-spacing: -0.01em; font-weight: 600; color: #232323; margin-top: 5px; }
   h2 { font-family: system-ui, sans-serif; font-size: 22px; line-height: 30px; letter-spacing: -0.005em; font-weight: 600; color: #232323; margin-top: 54px; }
@@ -228,7 +227,7 @@
 
   @media (max-width: 1280px) { .convo { width: 320px; } }
   @media (max-width: 1100px) { .convo { display: none; } }
-  @media (max-width: 800px)  { .side  { display: none; } .doc-inner { padding: 32px 24px 80px; } }
+  /* (outcome.html's 800px media override removed — the panel iframe is always narrow) */
 </style>
 </head>
 <body>
