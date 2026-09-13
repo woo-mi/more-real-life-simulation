@@ -523,11 +523,12 @@
     Jdim: ['rgba(221,221,221,0.08)', 'rgba(221,221,221,0.38)', '#DDDDDD', 'J']
   };
 
-  // Row spec (frame "real life", top to bottom):
+  // Row spec (frame "real life agent home", top to bottom): the just-created
+  // Metric Movement Explainer on top, Cohort & Lifecycle Review still "New" below it.
   // [name, nameState, info(0|14|16), pattern, avatarKey, owner, ownerDim, date, dateDim, newChip]
   var ROWS = [
-    ['Cohort & Lifecycle Review',       'green',   0,  PGRAY,  'A',    'Alonzo Canada', false, 'Just created', false, true ],
-    ['Trivy Vulnerability Remediation', 'green',   0,  P2,     'S',    'Milan Korsos',  false, 'Aug 2026',     false, false],
+    ['Metric Movement Explainer',       'green',   0,  PGRAY,  'A',    'Alonzo Canada', false, 'Just created', false, true ],
+    ['Cohort & Lifecycle Review',       'green',   0,  P2,     'S',    'Milan Korsos',  false, 'Aug 2026',     false, true ],
     ['Trivy Vulnerability Remediation', 'green',   0,  P3,     'J',    'Milan Korsos',  false, 'Aug 2026',     false, false],
     ['Trivy Vulnerability Remediation', 'green',   14, PDIM,   'Jdim', 'Milan Korsos',  true,  'Aug 2026',     true,  false],
     ['Trivy Vulnerability Remediation', 'dim',     0,  PDIM,   'Jdim', 'Milan Korsos',  true,  'Aug 2026',     true,  false],
