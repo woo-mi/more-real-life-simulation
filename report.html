@@ -52,13 +52,34 @@
 
   /* ---- report document ---- */
   .doc { flex: 1; min-width: 0; overflow-y: auto; background: #FFFFFF; }
-  .panel-top {
+  .tabbar {
     flex-shrink: 0;
-    display: flex; align-items: center; justify-content: flex-end; gap: 10px;
-    padding: 18px 28px 0 20px;
+    height: 48px;
+    display: flex; align-items: stretch;
     background: #FFFFFF;
+    border-bottom: 1px solid #E6E6E6;
   }
-  .panel-create {
+  .tab {
+    display: flex; align-items: center; gap: 12px;
+    padding: 0 12px 0 16px;
+    font-family: system-ui, sans-serif;
+    font-size: 14px; line-height: 20px;
+    color: #171717;
+    background: #FFFFFF;
+    border-right: 1px solid #E6E6E6;
+    margin-bottom: -1px;
+    border-bottom: 1px solid #FFFFFF; /* active tab merges with the content below */
+  }
+  .tab-x {
+    width: 22px; height: 22px;
+    display: flex; align-items: center; justify-content: center;
+    background: none; border: none; border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.12s ease;
+  }
+  .tab-x:hover { background: #F4F5F7; }
+  .cta-create {
+    position: absolute; top: 22px; right: 46px;
     display: inline-flex; align-items: center; gap: 8px;
     height: 32px;
     padding: 0 12px;
@@ -70,16 +91,8 @@
     color: #171717;
     cursor: default;
   }
-  .panel-create:hover { background: #FAFAFA; }
-  .panel-ic {
-    width: 28px; height: 28px;
-    display: flex; align-items: center; justify-content: center;
-    background: none; border: none; border-radius: 6px;
-    cursor: pointer;
-    transition: background-color 0.12s ease;
-  }
-  .panel-ic:hover { background: #F4F5F7; }
-  .doc-inner { margin: 0; padding: 15px 46px 96px 50px; } /* frame 7 insets; the report image scales to the panel width */
+  .cta-create:hover { background: #FAFAFA; }
+  .doc-inner { position: relative; margin: 0; padding: 15px 46px 96px 50px; } /* frame 7 insets; the report image scales to the panel width */
   .report-img { display: block; width: 100%; height: auto; }
   .meta { font-size: 13px; line-height: 18px; font-weight: 500; color: #232323; }
   h1 { font-size: 28px; line-height: 36px; letter-spacing: -0.01em; font-weight: 600; color: #232323; margin-top: 5px; }
@@ -237,21 +250,21 @@
   
 
   <div class="layout">
-    <div class="panel-top">
-      <span class="cta light panel-create">
-        <svg width="16" height="16" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6.944" fill="none" stroke="#171717" stroke-width="1.3"/><rect x="8.333" y="7.222" width="1.667" height="3.333" rx="0.75" fill="#171717"/><rect x="12.222" y="7.222" width="1.667" height="3.333" rx="0.75" fill="#171717"/></svg>
-        Create Agent
-      </span>
-      <span class="panel-ic" title="Expand">
-        <svg width="16" height="16" viewBox="0 0 24 24"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" fill="none" stroke="#666666" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </span>
-      <button class="panel-ic" id="panelClose" title="Close">
-        <svg width="16" height="16" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" fill="none" stroke="#666666" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </button>
+    <div class="tabbar">
+      <div class="tab active">
+        Artifact 1
+        <button class="tab-x" id="panelClose" title="Close">
+          <svg width="14" height="14" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12" fill="none" stroke="#8F8F8F" stroke-width="1.8" stroke-linecap="round"/></svg>
+        </button>
+      </div>
     </div>
     
       <div class="doc">
       <div class="doc-inner">
+        <span class="cta-create">
+          <svg width="16" height="16" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6.944" fill="none" stroke="#171717" stroke-width="1.3"/><rect x="8.333" y="7.222" width="1.667" height="3.333" rx="0.75" fill="#171717"/><rect x="12.222" y="7.222" width="1.667" height="3.333" rx="0.75" fill="#171717"/></svg>
+          Create Agent
+        </span>
         <img class="report-img" src="report-content.png" alt="Live Apps Usage Momentum report" width="874" height="4834" />
       </div>
     </div>
