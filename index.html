@@ -715,7 +715,7 @@
   }
   .rl-modal .m-btn:hover { background: #000000; }
 
-  /* created agent list (created.html embedded as a full-viewport layer, frame "real life") */
+  /* created agent screen (agent.html embedded as a full-viewport layer, frame "real life created agent") */
   .created-frame {
     position: fixed;
     inset: 0;
@@ -1490,7 +1490,7 @@
   <button class="m-btn" id="rlGotIt" type="button">Got it</button>
 </div>
 
-<iframe class="created-frame" id="createdFrame" title="Agents list" loading="lazy"></iframe>
+<iframe class="created-frame" id="createdFrame" title="Created agent" loading="lazy"></iframe>
 
 <script>
 (function () {
@@ -2099,7 +2099,7 @@
   /* Create Agent (report panel) -> "real life loading" modal -> Got it -> "real life created agent" */
   function openRlModal() {
     var frame = document.getElementById('createdFrame');
-    if (!frame.src) frame.src = 'created.html'; /* preload the list behind the modal */
+    if (!frame.src) frame.src = 'agent.html'; /* preload the created-agent screen behind the modal */
     document.body.classList.add('rlmodal');
   }
   function closeRlModal() {
