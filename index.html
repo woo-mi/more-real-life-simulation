@@ -151,7 +151,7 @@
     padding: 18px 12px 12px;
     transition: padding 0.2s ease;
   }
-  .composer.filled .card { padding-bottom: 18.5px; }
+  .composer.tall .card { padding-bottom: 18.5px; }
   .prompt-input {
     flex: 1 1 auto;
     min-height: 26px;
@@ -171,7 +171,7 @@
     margin-top: 14px;
     transition: margin 0.2s ease;
   }
-  .composer.filled .controls { margin-top: 29.5px; }
+  .composer.tall .controls { margin-top: 29.5px; }
   .controls-left, .controls-right { display: flex; align-items: center; }
   .controls-left { gap: 8px; }
   .controls-right { gap: 6px; }
@@ -1421,9 +1421,12 @@
   }
 
   function textareaHeight() {
+    /* flex-grow inflates scrollHeight; measure with flex neutralized */
+    input.style.flex = '0 0 auto';
     input.style.height = 'auto';
     var h = Math.max(26, input.scrollHeight);
     input.style.height = h + 'px';
+    input.style.flex = '';
     return h;
   }
 
@@ -1431,7 +1434,10 @@
     var filled = input.value.length > 0;
     composer.classList.toggle('filled', filled);
     var textH = textareaHeight();
-    if (filled) {
+    /* only grow past the resting 120px when the text wraps beyond one line */
+    var tall = filled && textH > 26;
+    composer.classList.toggle('tall', tall);
+    if (tall) {
       /* 18 top + text + 29.5 gap + 34 row + 18.5 bottom (frame "2": 178 at 3 lines) */
       composer.style.height = (18 + textH + 29.5 + 34 + 18.5) + 'px';
     } else {
