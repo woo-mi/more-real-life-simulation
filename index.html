@@ -404,6 +404,8 @@
   .tc.num.w80 { width: 76px; }
   .tc.band { display: flex; align-items: center; gap: 7px; padding-left: 18px; width: 118px; }
   .bchip { width: 11px; height: 11px; border-radius: 2px; flex-shrink: 0; display: inline-block; }
+  /* frame 6 clips the activity table card at 441px (1mg row half-visible) */
+  .rl-results .chartcard:has(.atable-wrap) { max-height: 441px; overflow: hidden; }
   .rl-artifact {
     margin-top: 20px;
     position: relative;
