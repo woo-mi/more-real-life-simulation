@@ -480,6 +480,8 @@
     cursor: pointer;
   }
   body.rlreport .instr-view { top: 48px; }
+  /* the compressed chat fills its column with tight margins, per the mock */
+  body.rlreport .instr-col { max-width: calc(100% - 52px); }
   .report-slide {
     position: fixed;
     top: 48px; right: 0; bottom: 0;
