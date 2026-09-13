@@ -2095,16 +2095,22 @@
   function closeOutcome() {
     document.body.classList.remove('outcome');
   }
-  document.getElementById('createAgentBtn').addEventListener('click', openOutcome);
+  /* Create agent (Overview) -> frame "loading screen - interview style" (same modal, 4s) -> Outcome */
+  document.getElementById('createAgentBtn').addEventListener('click', function () { openRlModal(openOutcome); });
 
-  /* Create Agent (report panel) -> "real life loading" modal (4s, progress bar fills) -> "real life created agent" */
+  /* "Creating agent..." modal (4s, progress bar fills), shared by two paths:
+     - report panel Create Agent (frame "real life loading") -> "real life created agent"
+     - Overview Create agent (frame "loading screen - interview style") -> interview style Outcome */
   var rlModalTimer = null;
-  function openRlModal() {
-    var frame = document.getElementById('createdFrame');
-    if (!frame.src) frame.src = 'agent.html?v=5'; /* preload the created-agent screen behind the modal (?v busts stale CDN copies) */
+  function openRlModal(next) {
+    next = next || openRlCreated;
+    if (next === openRlCreated) {
+      var frame = document.getElementById('createdFrame');
+      if (!frame.src) frame.src = 'agent.html?v=5'; /* preload the created-agent screen behind the modal (?v busts stale CDN copies) */
+    }
     document.body.classList.add('rlmodal');
     clearTimeout(rlModalTimer);
-    rlModalTimer = setTimeout(openRlCreated, 4000);
+    rlModalTimer = setTimeout(function () { closeRlModal(); next(); }, 4000);
   }
   function closeRlModal() {
     clearTimeout(rlModalTimer);
