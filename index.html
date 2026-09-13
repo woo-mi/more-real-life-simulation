@@ -1096,6 +1096,20 @@
         { label: 'DELIVERY', parts: ['Post a concise summary to ', { p: 'slack_channel' }, ' with a bold heading per KPI.'] }
       ]
     },
+    'Report Consolidator': {
+      name: 'Report Consolidator',
+      quote: '\u201cConsolidate the prev and the current report into one\u2026\u201d \u2014 your prompt',
+      cadence: 'daily',
+      channel: '#reports',
+      noun: 'consolidated report',
+      deliveryQuote: '\u201c\u2026for unique users don\u2019t accumulate\u201d \u2014 your prompt',
+      answer: 'I will set up the consolidation logic \u2014 unique users will be counted once, never accumulated across the two reports. I still need the run time and posting destination.',
+      sections: [
+        { label: 'DATA', parts: ['Pull the previous and current ', { p: 'report_scope' }, ' reports for the last ', { p: 'lookback_window' }, ' days.'] },
+        { label: 'ANALYSIS', parts: ['Merge them into one report, counting ', { p: 'unique_users' }, ' once \u2014 never accumulated across periods.'] },
+        { label: 'DELIVERY', parts: ['Post the consolidated report to ', { p: 'slack_channel' }, ', replacing the two separate ones.'] }
+      ]
+    },
     'Business Review': {
       name: 'Business Review',
       quote: '\u201cRuns monthly to rank variances by materiality\u2026\u201d \u2014 your prompt',
@@ -1469,6 +1483,17 @@
     if (!input.value) selectedLabel = null;
     layout();
   });
+
+  /* clicking the empty input box simulates a real user typing their own prompt */
+  var AUTOPROMPT = "consolidate the prev and the current report into one -> for unique users don't accumulate";
+  function promptOnClick() {
+    if (input.value || typeTimer) return;
+    clearSelection();
+    selectedLabel = 'Report Consolidator';
+    typewriter(AUTOPROMPT);
+  }
+  input.addEventListener('focus', promptOnClick);
+  input.addEventListener('click', promptOnClick);
 
   document.getElementById('sendBtn').addEventListener('click', function () {
     if (!input.value || typeTimer) return;
