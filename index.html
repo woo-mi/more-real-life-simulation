@@ -2099,7 +2099,7 @@
   /* Create Agent (report panel) -> "real life loading" modal -> Got it -> "real life created agent" */
   function openRlModal() {
     var frame = document.getElementById('createdFrame');
-    if (!frame.src) frame.src = 'agent.html?v=2'; /* preload the created-agent screen behind the modal (?v busts stale CDN copies) */
+    if (!frame.src) frame.src = 'agent.html?v=3'; /* preload the created-agent screen behind the modal (?v busts stale CDN copies) */
     document.body.classList.add('rlmodal');
   }
   function closeRlModal() {
