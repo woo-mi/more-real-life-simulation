@@ -2099,7 +2099,7 @@
   /* Create Agent (report panel) -> "real life loading" modal -> Got it -> "real life created agent" */
   function openRlModal() {
     var frame = document.getElementById('createdFrame');
-    if (!frame.src) frame.src = 'agent.html?v=4'; /* preload the created-agent screen behind the modal (?v busts stale CDN copies) */
+    if (!frame.src) frame.src = 'agent.html?v=5'; /* preload the created-agent screen behind the modal (?v busts stale CDN copies) */
     document.body.classList.add('rlmodal');
   }
   function closeRlModal() {
@@ -2109,7 +2109,7 @@
     /* the layer can navigate internally (rail Agents -> agents.html); a fresh Got it starts at the agent screen */
     var frame = document.getElementById('createdFrame');
     try {
-      if (frame.contentWindow && !/agent\.html$/.test(frame.contentWindow.location.pathname)) frame.src = 'agent.html?v=4';
+      if (frame.contentWindow && !/agent\.html$/.test(frame.contentWindow.location.pathname)) frame.src = 'agent.html?v=5';
     } catch (err) { /* cross-origin fallback: leave as-is */ }
     closeRlModal();
     document.body.classList.add('rlcreated');
