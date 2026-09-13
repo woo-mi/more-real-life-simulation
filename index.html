@@ -454,6 +454,49 @@
   .rl-actions .divider { width: 1px; height: 18px; background: #D4D8E3; margin: 0 8px 0 12px; }
   .rl-actions .icons { display: flex; align-items: center; gap: 12px; }
   .rl-time { margin-left: auto; color: #14181FB3; font-size: 12px; font-weight: 400; line-height: 130%; }
+
+  /* "7 real life opened report": Open Report slides a report panel in from the right */
+  .ra-open { cursor: pointer; }
+  .instr-view { transition: right 0.3s ease; }
+  body.rlreport .instr-view { right: min(695px, 55vw); }
+  .rl-chat-header {
+    position: fixed;
+    top: 0; left: 48px; right: 0;
+    height: 48px;
+    background: #FFFFFF;
+    border-bottom: 1px solid #E6E6E6;
+    display: none;
+    align-items: center; gap: 8px;
+    padding: 0 20px 0 12px;
+    z-index: 270;
+  }
+  body.rlreport .rl-chat-header { display: flex; }
+  .rl-chat-header .hd-back {
+    display: flex; align-items: center; gap: 10px;
+    background: none; border: none;
+    font-family: system-ui, sans-serif;
+    font-size: 14px; line-height: 20px;
+    color: #171717;
+    cursor: pointer;
+  }
+  body.rlreport .instr-view { top: 48px; }
+  .report-slide {
+    position: fixed;
+    top: 48px; right: 0; bottom: 0;
+    width: min(695px, 55vw);
+    background: #FFFFFF;
+    border-left: 1px solid #E6E6E6;
+    transform: translateX(105%);
+    visibility: hidden;
+    transition: transform 0.3s ease, visibility 0s linear 0.3s;
+    z-index: 260;
+  }
+  body.rlreport .report-slide {
+    transform: translateX(0);
+    visibility: visible;
+    transition: transform 0.3s ease;
+  }
+  .report-slide iframe { width: 100%; height: 100%; border: 0; display: block; }
   .u-bubble-sm { width: fit-content; max-width: 744px; min-height: 0; }
   .bubble-sections { display: flex; flex-direction: column; gap: 12px; max-width: 668px; }
   .bubble-sections .sec-body { font-size: 14px; font-weight: 400; line-height: 160%; color: #333444; }
@@ -1361,6 +1404,21 @@
   </div>
 </div>
 
+<div class="rl-chat-header">
+  <div class="panel-btn">
+    <svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1" y="1.5" width="14" height="13" rx="2.5" fill="none" stroke="#666666"/>
+      <path d="M5.6 1.5 L5.6 14.5" fill="#000000" stroke="#666666"/>
+    </svg>
+  </div>
+  <button class="hd-back" id="rlHeaderBack">
+    <svg width="16" height="16" viewBox="0 0 16 16"><path d="M9.9 3.2 L5.3 8 L9.9 12.8" fill="none" stroke="#171717" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Metric Movement Explainer
+  </button>
+</div>
+
+<div class="report-slide"><iframe id="reportFrame" title="Live Apps report" loading="lazy"></iframe></div>
+
 <iframe class="outcome-frame" id="outcomeFrame" src="outcome.html" title="interview style Outcome"></iframe>
 
 <script>
@@ -1834,6 +1892,7 @@
     clearStages();
     document.body.classList.remove('convo');
     document.body.classList.remove('outcome');
+    document.body.classList.remove('rlreport');
   }
 
   function textareaHeight() {
@@ -1945,6 +2004,18 @@
     });
   });
 
+  /* Open Report slides in the report panel (report.html, frame "7 real life opened report") */
+  function openRlReport() {
+    var frame = document.getElementById('reportFrame');
+    if (!frame.src) frame.src = 'report.html';
+    document.body.classList.add('rlreport');
+  }
+  function closeRlReport() {
+    document.body.classList.remove('rlreport');
+  }
+  document.querySelector('.ra-open').addEventListener('click', openRlReport);
+  document.getElementById('rlHeaderBack').addEventListener('click', closeRlReport);
+
   /* Create agent opens the interview style Outcome screen (outcome.html layer) */
   function openOutcome() {
     document.body.classList.add('outcome');
@@ -1955,10 +2026,15 @@
   document.getElementById('createAgentBtn').addEventListener('click', openOutcome);
   window.addEventListener('message', function (e) {
     if (e.data === 'outcomeBack') closeOutcome();
+    if (e.data === 'rlReportClose') closeRlReport();
   });
 
   document.addEventListener('keydown', function (e) {
     if (e.key !== 'Escape') return;
+    if (document.body.classList.contains('rlreport')) {
+      closeRlReport(); /* slide the report panel away */
+      return;
+    }
     if (document.body.classList.contains('outcome')) {
       closeOutcome(); /* back to the Overview thread */
       return;
