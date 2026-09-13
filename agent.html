@@ -31,7 +31,7 @@
   .hd { position: fixed; left: 48px; right: 0; top: 0; height: 48px; z-index: 90; background: #FFFFFF; border-bottom: 1px solid #E6E6E6; display: flex; align-items: center; padding-left: 12px; gap: 8px; }
   .hd-panel { width: 20px; height: 20px; display: flex; align-items: center; justify-content: center; border-radius: 4px; flex-shrink: 0; }
   .hd-back { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-  .hd-title { font-family: system-ui, sans-serif; font-size: 13px; line-height: 20px; color: #171717; }
+  .hd-title { font-family: system-ui, sans-serif; font-size: 14px; line-height: 20px; color: #171717; } /* frame "real life created agent" header runs at text-body 14 */
   .hd-back:hover .hd-title { color: #000; }
 
   /* ---- 3-pane layout ---- */
@@ -316,7 +316,7 @@
             </svg></div>
     <a class="hd-back" href="#" id="hdBack"><svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0">
               <path d="M9.9 3.2 L5.3 8 L9.9 12.8" fill="none" stroke="#171717" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" />
-            </svg><span class="hd-title">Agent</span></a>
+            </svg><span class="hd-title">Metric Movement Explainer</span></a>
   </header>
 
   <div class="seg-ctl">
@@ -398,8 +398,13 @@
     }
     document.getElementById('hdBack').addEventListener('click', createdClose);
     document.addEventListener('keydown', e => { if (e.key === 'Escape') createdClose(); });
+    /* The active Agents rail icon goes to the Agents home (frame "real life agent home"),
+       navigating within this layer. */
     var railActive = document.querySelector('.ric.active');
-    if (railActive) railActive.addEventListener('click', createdClose);
+    if (railActive) {
+      railActive.style.cursor = 'pointer';
+      railActive.addEventListener('click', function () { window.location.href = 'agents.html'; });
+    }
 
     /* Artifact (report) / Setting toggle (frame "real life creted agent setting") */
     var segReport = document.getElementById('segReport');
