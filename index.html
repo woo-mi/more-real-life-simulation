@@ -685,7 +685,7 @@
   body.rlmodal .rl-scrim { opacity: 1; visibility: visible; transition: opacity 0.18s ease; }
   .rl-modal {
     position: fixed; left: 50%; top: 50%; z-index: 501;
-    width: 601px; max-width: calc(100vw - 32px); height: 361px;
+    width: 463px; max-width: calc(100vw - 32px); height: 289px;
     border-radius: 20px; background: #FFFFFF;
     transform: translate(-50%, -50%) scale(0.98);
     opacity: 0; visibility: hidden;
@@ -696,36 +696,37 @@
     transform: translate(-50%, -50%) scale(1);
     transition: opacity 0.18s ease, transform 0.18s ease;
   }
-  .rl-modal .m-face { position: absolute; left: 50%; top: 59px; margin-left: -28px; }
+  .rl-modal .m-face { position: absolute; left: 50%; top: 66px; margin-left: -28px; }
+  .rl-modal .m-bar {
+    position: absolute; top: 131.5px; left: 50%; margin-left: -28px;
+    width: 56px; height: 6px; border-radius: 100px; background: #DDDDDD;
+    overflow: hidden;
+  }
+  .rl-modal .m-fill {
+    display: block; width: 0; height: 6px; border-radius: 100px; background: #232323;
+  }
+  body.rlmodal .m-fill { width: 56px; transition: width 3.8s ease-out 0.1s; }
   .rl-modal .m-title {
-    position: absolute; top: 140.5px; left: 24px; right: 24px; text-align: center;
-    font-size: 28px; line-height: 28px; font-weight: 500; color: #232323;
+    position: absolute; top: 159px; left: 24px; right: 24px; text-align: center;
+    font-size: 19px; line-height: 28px; font-weight: 500; color: #232323;
   }
   .rl-modal .m-body {
-    position: absolute; top: 184.5px; left: 24px; right: 24px; text-align: center;
-    font-size: 18px; line-height: 24px; color: #232323;
+    position: absolute; top: 193px; left: 50%; transform: translateX(-50%); width: 317px; max-width: calc(100% - 48px);
+    text-align: center; font-size: 15px; line-height: 18px; color: #232323;
   }
-  .rl-modal .m-btn {
-    position: absolute; top: 271px; left: 50%; margin-left: -48px;
-    width: 96px; height: 48px;
-    display: flex; align-items: center; justify-content: center;
-    border-radius: 8px; background: #171717; border: 0;
-    font-family: system-ui, sans-serif; font-size: 15px; line-height: 18px; font-weight: 500; color: #FFFFFF;
-    cursor: pointer;
-  }
-  .rl-modal .m-btn:hover { background: #000000; }
 
   /* created agent screen (agent.html embedded as a full-viewport layer, frame "real life created agent") */
   .created-frame {
     position: fixed;
     inset: 0;
     z-index: 520;
-    display: none;
     width: 100%; height: 100%;
     border: 0;
     background: #FFFFFF;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.25s ease, visibility 0s linear 0.25s;
   }
-  body.rlcreated .created-frame { display: block; }
+  body.rlcreated .created-frame { opacity: 1; visibility: visible; transition: opacity 0.25s ease; }
 
   /* Data domain card (frame "Data domain") */
   .domain-card {
@@ -1485,9 +1486,9 @@
     <rect x="26" y="18" width="5" height="10" rx="2.5" fill="#232323"/>
     <rect x="38" y="18" width="5" height="10" rx="2.5" fill="#232323"/>
   </svg>
+  <div class="m-bar"><span class="m-fill"></span></div>
   <div class="m-title">Creating agent...</div>
   <div class="m-body">It's watching your metrics now. You'll get an<br>Metric Movement Explainer with settings.</div>
-  <button class="m-btn" id="rlGotIt" type="button">Got it</button>
 </div>
 
 <iframe class="created-frame" id="createdFrame" title="Created agent" loading="lazy"></iframe>
@@ -2096,17 +2097,22 @@
   }
   document.getElementById('createAgentBtn').addEventListener('click', openOutcome);
 
-  /* Create Agent (report panel) -> "real life loading" modal -> Got it -> "real life created agent" */
+  /* Create Agent (report panel) -> "real life loading" modal (4s, progress bar fills) -> "real life created agent" */
+  var rlModalTimer = null;
   function openRlModal() {
     var frame = document.getElementById('createdFrame');
     if (!frame.src) frame.src = 'agent.html?v=5'; /* preload the created-agent screen behind the modal (?v busts stale CDN copies) */
     document.body.classList.add('rlmodal');
+    clearTimeout(rlModalTimer);
+    rlModalTimer = setTimeout(openRlCreated, 4000);
   }
   function closeRlModal() {
+    clearTimeout(rlModalTimer);
+    rlModalTimer = null;
     document.body.classList.remove('rlmodal');
   }
   function openRlCreated() {
-    /* the layer can navigate internally (rail Agents -> agents.html); a fresh Got it starts at the agent screen */
+    /* the layer can navigate internally (rail Agents -> agents.html); a fresh run starts at the agent screen */
     var frame = document.getElementById('createdFrame');
     try {
       if (frame.contentWindow && !/agent\.html$/.test(frame.contentWindow.location.pathname)) frame.src = 'agent.html?v=5';
@@ -2117,7 +2123,6 @@
   function closeRlCreated() {
     document.body.classList.remove('rlcreated');
   }
-  document.getElementById('rlGotIt').addEventListener('click', openRlCreated);
   document.getElementById('rlScrim').addEventListener('click', closeRlModal);
 
   window.addEventListener('message', function (e) {
