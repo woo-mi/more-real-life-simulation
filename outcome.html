@@ -173,8 +173,8 @@
   .side { width: clamp(308px, calc(308px + (100vw - 1440px) * 0.6), 480px); flex-shrink: 0; background: #FFFFFF; border-left: 0.5px solid #D4D4D4; }
   .side-row { display: flex; align-items: center; gap: 6px; height: 39px; padding: 0 13px; border-bottom: 0.5px solid #DDDDDD; font-family: system-ui, sans-serif; font-size: 13px; line-height: 18px; font-weight: 500; color: #232323; }
   .side-row svg { position: static !important; }
-  .side-ctas { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 13px; }
-  .cta { height: 32px; display: flex; align-items: center; padding: 0 12px; border-radius: 6px; font-family: system-ui, sans-serif; font-size: 13px; line-height: 18px; font-weight: 500; }
+  .side-ctas { display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 20px 13px 13px; }
+  .cta { height: 32px; display: flex; align-items: center; padding: 0 12px; border-radius: 6px; font-family: system-ui, sans-serif; font-size: 14px; line-height: 18px; font-weight: 500; }
   .cta.dark { background: #171717; color: #FFFFFF; text-decoration: none; cursor: pointer; }
   .cta.dark:hover { background: #000000; }
   .hd { padding-right: 20px; }
@@ -279,7 +279,6 @@
     <a class="hd-back" href="#" id="hdBack"><svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" style="flex-shrink: 0">
               <path d="M9.9 3.2 L5.3 8 L9.9 12.8" fill="none" stroke="#171717" stroke-width="1.33" stroke-linecap="round" stroke-linejoin="round" />
             </svg><span class="hd-title">Metric Movement Explainer</span></a>
-    <div class="hd-right"><span class="cta dark disabled">Update agent</span></div>
   </header>
 
   <div class="layout">
@@ -662,7 +661,11 @@
     <div class="side-row">Delivery<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 14 14" style="position: absolute">
           <path d="M5.25 10.5l3.5-3.5-3.5-3.5" fill="none" stroke="var(--color-text-secondary)" stroke-linecap="round" stroke-linejoin="round" />
         </svg></div>
-    </aside>
+        <div class="side-ctas">
+      <span class="cta dark">Confirm and create agent</span>
+      <span class="cta light">Save as a draft and run a test</span>
+    </div>
+  </aside>
   </div>
 
   <script>
