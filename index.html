@@ -1256,8 +1256,8 @@
   };
 
   var instrView = document.getElementById('instrView');
-  var stageIds = ['stgBubble', 'stgThought', 'stgAnswer', 'stgLoaded', 'stgCard', 'stgMini'];
-  var stageDelays = [80, 800, 1400, 2050, 2500, 2500];
+  var stageIds = ['stgBubble', 'stgThought', 'stgAnswer', 'stgLoaded', 'stgCard'];
+  var stageDelays = [80, 800, 1400, 2050, 2500];
   var stageTimers = [];
 
   function renderSections(sections, container) {
@@ -1294,6 +1294,7 @@
     stageTimers.forEach(clearTimeout);
     stageTimers = [];
     stageIds.forEach(function (id) { document.getElementById(id).classList.remove('in'); });
+    document.getElementById('stgMini').classList.remove('in');
     ['rlThought', 'rlAnswer1', 'rlStep1', 'rlAnswer2', 'rlStep2', 'rlTile'].forEach(function (id) {
       var el = document.getElementById(id);
       el.classList.remove('in');
@@ -1462,8 +1463,8 @@
   }
 
   /* "3 real life": the Report Consolidator prompt opens this thread instead of the wizard */
-  var rlIds = ['stgBubble', 'rlThought', 'rlAnswer1', 'rlStep1', 'rlAnswer2', 'rlStep2', 'rlTile', 'stgMini'];
-  var rlDelays = [80, 800, 1400, 2000, 2600, 3200, 3800, 3800];
+  var rlIds = ['stgBubble', 'rlThought', 'rlAnswer1', 'rlStep1', 'rlAnswer2', 'rlStep2', 'rlTile'];
+  var rlDelays = [80, 800, 1400, 2000, 2600, 3200, 3800];
   var wizardPhase1 = ['stgThought', 'stgAnswer', 'stgLoaded'];
   var rlTileStarted = false;
 
@@ -1555,6 +1556,7 @@
     document.getElementById('stgCard').hidden = true;
     document.body.classList.add('convo');
     instrView.scrollTop = 0;
+    document.getElementById('stgMini').classList.add('in'); /* composer is present from the start */
     startRlTile();
     stageIn(rlIds, rlDelays);
   }
@@ -1569,6 +1571,7 @@
     wizardPhase1.forEach(function (id) { document.getElementById(id).hidden = false; });
     document.body.classList.add('convo');
     instrView.scrollTop = 0;
+    document.getElementById('stgMini').classList.add('in'); /* composer is present from the start */
     stageIds.forEach(function (id, idx) {
       stageTimers.push(setTimeout(function () {
         document.getElementById(id).classList.add('in');
