@@ -89,7 +89,7 @@
     font-family: 'Inter', system-ui, sans-serif;
     font-size: 14px; font-weight: 500; line-height: 18px;
     color: #171717;
-    cursor: default;
+    cursor: pointer;
   }
   .cta-create:hover { background: #FAFAFA; }
   .doc-inner { position: relative; margin: 0; padding: 15px 46px 96px 50px; } /* frame 7 insets; the report image scales to the panel width */
@@ -261,7 +261,7 @@
     
       <div class="doc">
       <div class="doc-inner">
-        <span class="cta-create">
+        <span class="cta-create" id="ctaCreate" role="button" tabindex="0">
           <svg width="16" height="16" viewBox="0 0 20 20"><circle cx="10" cy="10" r="6.944" fill="none" stroke="#171717" stroke-width="1.3"/><rect x="8.333" y="7.222" width="1.667" height="3.333" rx="0.75" fill="#171717"/><rect x="12.222" y="7.222" width="1.667" height="3.333" rx="0.75" fill="#171717"/></svg>
           Create Agent
         </span>
@@ -281,6 +281,15 @@
     }
     document.getElementById('panelClose').addEventListener('click', reportClose);
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') reportClose(); });
+
+    /* Create Agent -> "Creating agent..." modal (frame "real life loading"), owned by the parent
+       so its scrim covers the whole viewport, not just this panel. */
+    function createAgent() {
+      if (window.parent !== window) { window.parent.postMessage('rlCreateAgent', '*'); }
+    }
+    var cta = document.getElementById('ctaCreate');
+    cta.addEventListener('click', createAgent);
+    cta.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); createAgent(); } });
   </script>
 </body>
 </html>
